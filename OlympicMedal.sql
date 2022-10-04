@@ -1,4 +1,6 @@
-use olympicdata;
+#In this SQL code, I'm querying a database that's holding OlympicMedal data to answer questions about the data.
+
+#Display all the rows and columns in your dataset
 
 -- WHICH COUNTRY HAS WON THE MOST MEDALS
 select NOC,count(medal) as CountMedal
@@ -18,14 +20,13 @@ from olympicdatamedal
 where medal = 'Silver'
 group by noc
 order by CountMedal desc;
+
 -- WHICH COUNTRY HAS WON THE MOST BRONZE
 select noc,count(medal) as CountMedal
 from olympicdatamedal
 where medal = 'Bronze'
 group by noc
 order by CountMedal desc;
-select *
-from olympicdatamedal;
 
 -- IN WHICH EDITION (I.E. YEAR) WAS THE MOST GOLD WON, WHO WON THE MOST GOLD IN THE YEAR
 select concat(AthleteLastName, ' ',AthleteFirstName ) AS FullName,Edition, count(Edition) as CountEdition
