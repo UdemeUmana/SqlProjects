@@ -1,6 +1,8 @@
 #In this SQL code, I'm querying a database that's holding OlympicMedal data to answer questions about the data.
 
 #Display all the rows and columns in your dataset
+select *
+from olympicdatamedal;
 
 -- WHICH COUNTRY HAS WON THE MOST MEDALS
 select NOC,count(medal) as CountMedal
