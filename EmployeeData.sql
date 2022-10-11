@@ -1,3 +1,5 @@
+#Create an Employee database
+
 create database Portfolio;
 use portfolio;
 #Creating an Employees data Table
