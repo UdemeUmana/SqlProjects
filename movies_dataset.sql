@@ -24,6 +24,3 @@ FROM movies
 group by genre
 order by 2 desc;
 
-SELECT *
-FROM movies;
-
