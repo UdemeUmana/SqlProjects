@@ -4,7 +4,7 @@
 
 
 
-#Get top 21 rows of most data to observe
+#Geting top 21 rows from the order and product table for observation
 SELECT * FROM customer_data as cu
 JOIN `order` as od ON cu.Cust_id= od.cust_id
 JOIN product as pr ON od.Prod_id = pr.Prod_id
@@ -14,7 +14,6 @@ LIMIT 21;
 
 
 #Your company is having a layoff and your boss tells you to layoff any staff without a degree
-
 #Finding the names,jobtitle,degree of employees that do not have a degree
 SELECT em.first_name,em.last_name,degree, jb.Jobtitle,
 count(Jobtitle) OVER (partition by Jobtitle) as jb1
@@ -66,7 +65,7 @@ FROM `order`
 WHERE order_date BETWEEN '2022-03-01 00:00:00' AND '2022-03-31 00:00:00');
 
 
-#Business analysts and customer_care has done well in their jobs and your boss asks you adda 0.4 dollars raise to them and give the rest 0.3 raise
+#Business analysts and customer_care has done well in their jobs and your boss asks you to add 0.4 dollars raise to their salary and give the resta 0.3 raise
 #Writing a case statement to calculate a raise for employees based on their jobtitles
 SELECT em.First_name,em.last_name,jb.salary,jb.jobtitle,
 CASE
@@ -92,7 +91,7 @@ Delimiter ;
 #A user inputting his login deatils
 call udy_express.User_login('James12', 'James12@Smith1');
 
-#Finding the job title with less than 3 people working there
+#Finding the job title with less than 3 people working in their department.
 #The manager realised that some department are short staff and wants you to find the jobtitle with less than 3 people working so that he can hire more people to work in that department
 SELECT jobtitle,COUNT(jobtitle) as jbt
 FROM job_info
