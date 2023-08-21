@@ -1,0 +1,50 @@
+--Getting a glance of the data in the dataset
+SELECT *
+FROM car_insurance;
+
+-- Checking the number of rows we have in a dataset
+SELECT 
+    count (*) AS total_car_insurance
+FROM car_insurance;
+
+--finding the average number of average claim amount and the average household income
+SELECT
+    ROUND(AVG(claim_amt),2) AS Avg_claim_amt,
+    ROUND(AVG(household_income),2) AS Avg_household_income
+FROM car_insurance;
+
+--displaying the total number of car owners per gender
+SELECT 
+    COUNT(*) AS total_car_owners,
+    Gender
+FROM car_insurance 
+GROUP BY Gender
+ORDER BY total_car_owners DESC;
+
+--displaying the total number of parents that are car owners;
+-- From the result it shows that a greater number of car owners are not parents
+SELECT 
+     COUNT(*) AS total_car_owners,
+     Parent
+ FROM car_insurance
+ GROUP BY parent
+ ORDER BY total_car_owners DESC;
+ 
+--Year with the highest number of car owners,claim_amt,household_income
+--From the analysis it shows that in the year 2006 had the highest number of car owners,claim_amt and household income
+SELECT
+    car_Year,
+    ROUND(SUM(ID),2) AS total_car_owners,
+    ROUND(SUM(Claim_amt),2) AS total_claim_amt,
+    ROUND(SUM(household_income),2) AS total_household_income
+FROM car_insurance
+GROUP BY car_Year
+ORDER BY total_car_owners DESC, total_claim_amt DESC, total_household_income DESC;
+
+--Which car use has the highest number of car owners. Private- For private use, Commercial - For public use
+SELECT 
+    COUNT(*) AS total_car_owners,
+    car_use
+FROM car_insurance
+GROUP BY car_use
+ORDER BY total_car_owners DESC;
