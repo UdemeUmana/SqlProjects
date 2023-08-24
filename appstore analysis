@@ -1,0 +1,91 @@
+--Checking the number of unique app in both tables
+--For the aaplestore table
+SELECT COUNT(DISTINCT app_id) AS number_of_apps
+FROM applestore;
+
+----For the aaplestore_description table
+SELECT COUNT(DISTINCT id) AS number_of_apps
+FROM applestore_description;
+
+--Checking for mising values in the applestore table
+SELECT COUNT(*) AS missingvalues
+FROM applestore
+WHERE user_rating IS NULL OR track_name IS NULL;
+
+--Finding the number of apps per genre
+SELECT 
+    prime_genre,
+    COUNT(*) AS Total_apps
+FROM applestore
+GROUP BY prime_genre
+ORDER BY Total_apps DESC;
+
+--Getting an overview of the apps rating
+SELECT 
+    MAX(user_rating) AS Max_rating,
+    MIN(user_rating) AS _Min_rating,
+    ROUND(AVG(user_rating),2) AS Avg_rating
+FROM applestore;
+
+--Determining whether paid apps have higher rating than free apps
+SELECT
+    CASE 
+        WHEN price > 0 THEN 'Paid'
+        ELSE 'Free'
+    END AS app_type,
+    ROUND(AVG(user_rating),2) as Avgrating
+FROM applestore
+GROUP BY app_type
+ORDER BY Avgrating DESC;
+
+--Checking if apps with more supported languages have higher ratings
+SELECT 
+CASE 
+    WHEN lang_num < 10 THEN '<10 languages'
+    WHEN lang_num BETWEEN 10 AND 30 THEN '10-30 languages'
+    ELSE '>30 languages'
+    END AS language_bucket,
+    ROUND(AVG(user_rating),2) AS Avgrating
+FROM applestore
+GROUP BY language_bucket
+ORDER BY Avgrating DESC;
+
+--Checking the genre with low rating
+SELECT 
+    prime_genre,
+    ROUND(AVG(user_rating),2) AS Avgrating
+FROM applestore
+GROUP BY prime_genre
+ORDER BY Avgrating ASC
+LIMIT 10;
+
+--Checking if there is correlation between the length of the app description and the user rating
+SELECT 
+    CASE
+        WHEN length(d.app_desc)< 500 THEN 'Short'
+        WHEN length(d.app_desc) BETWEEN 500 AND 1000 THEN 'Meduim'
+        ELSE 'Long'
+END AS description_length,
+    ROUND(AVG(user_rating),2) AS Avgrating
+FROM applestore AS ap
+JOIN applestore_description AS d USING(id)
+GROUP BY description_length
+ORDER BY Avgrating desc;
+
+--Finding the top rated apps
+SELECT 
+    prime_genre,
+    track_name,
+    user_rating
+FROM 
+    (
+  SELECT 
+  prime_genre,
+  track_name,
+  user_rating,
+  RANK() OVER(PARTITION BY prime_genre ORDER BY user_rating DESC, rating_count_tot DESC) AS rank 
+  FROM applestore 
+  ) AS a
+WHERE 
+a.rank = 1
+
